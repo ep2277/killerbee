@@ -6,12 +6,9 @@ import os
 import time
 from datetime import datetime, timedelta
 from .kbutils import KBCapabilities, makeFCS
-from .GoodFETCCSPI import GoodFETCCSPI
-from libhackrf import *
+import transceiver_OQPSK_sniffer
 
 
-'Chipcon CC2420 Register Definitions, means to be moved to kbutils.py or similar'
-CC2420_REG_SYNC: int = 0x14
 
 
 class HackRF:
@@ -32,11 +29,8 @@ class HackRF:
         self.handle: Optional[Any] = None
         self.dev: str = dev
 
-        # Set environment variables for GoodFET code to use
-        os.environ["platform"] = "apimote2"
-        os.environ["board"] = "apimote2"
 
-        self.handle = HackRF()
+        self.handle = transceiver_OQPSK_sniffer()
         self.handle.serInit(port=self.dev)
         self.handle.setup()
 
@@ -80,7 +74,7 @@ class HackRF:
         @rtype: List
         @return: List of 3 strings identifying device.
         '''
-        return [self.dev, "GoodFET Apimote v2", ""]
+        return [self.dev, "GNU Radio, Hack RF One", ""]
 
     # KillerBee expects the driver to implement this function
     def sniffer_on(self, channel: Optional[int] = None, page: int = 0) -> None:
