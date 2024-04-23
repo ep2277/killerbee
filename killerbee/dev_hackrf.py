@@ -283,16 +283,16 @@ class HackRF:
             self.handle.RF_carrier()
 
             # TODO maybe move sync to byte string rather than int
-
+'''
     def set_sync(self, sync: int = 0xA70F) -> Any:
-        '''Set the register controlling the 802.15.4 PHY sync byte.'''
+        'Set the register controlling the 802.15.4 PHY sync byte.'
         if self.handle is None:
             raise Exception("Handle does not exist")
 
         self.capabilities.require(KBCapabilities.SET_SYNC)
         if (sync >> 16) > 0:
             raise Exception("Sync word (%x) must be 2-bytes or less." % sync)
-        return self.handle.poke(CC2420_REG_SYNC, sync)
+        return self.handle.poke(CC2420_REG_SYNC, sync)'''
 
     def jammer_off(self) -> None:
         '''
