@@ -127,9 +127,12 @@ class HackRF:
 
         self.capabilities.require(KBCapabilities.SETCHAN)
 
-        if channel >= 11 and channel <= 26:
+        if 11 <= channel <= 26:
             self._channel = channel
-            self.handle.RF_setchan(channel)
+            'Set the channel on the radio with the right function from transceiver_OQPSK_sniffer'
+            index = self.handle._freq_labels.index(channel)
+            freq = self.handle._freq_options[index]
+            self.handle.freq(freq)
         else:
             raise Exception('Invalid channel')
         if page:
