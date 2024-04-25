@@ -196,7 +196,7 @@ class HackRF:
             start = datetime.now()
 
             while (packet is None) and ((start + timedelta(seconds=timeout)) > datetime.now()):
-                packet = self.handle.RF_rxpacket()
+                packet = self.handle.data
                 rssi = self.handle.RF_getrssi()  # TODO calibrate
 
             if packet is None:

@@ -214,27 +214,6 @@ class transceiver_OQPSK_sniffer(gr.top_block, Qt.QWidget):
         self.blocks_file_sink_0 = blocks.file_sink(gr.sizeof_char*1, '/tmp/zigbee.pcap', True)
         self.blocks_file_sink_0.set_unbuffered(True)
 
-        ##################################################################
-        ## Ein Python-Block, um die Daten in einer Variablen zu speichern
-        ###################################################################
-
-
-         self.data = []
-
-    def work(self, input_items, output_items):
-                # input_items enthält die empfangenen Nachrichten
-                # Speichere die empfangenen Daten in der Variable
-                self.data.extend(input_items[0])
-                return len(input_items[0])
-
-        # Erstelle eine Instanz des Python-Blocks
-        save_to_variable = SaveToVariable()
-
-        # Verbinde den Message Debug Block mit dem Python-Block
-        msg_debug.msg_connect((save_to_variable, 'store'))
-
-        # Füge save_to_variable zu deinem Flowgraph hinzu
-
 
         ##################################################
         # Connections
@@ -249,6 +228,7 @@ class transceiver_OQPSK_sniffer(gr.top_block, Qt.QWidget):
         self.connect((self.osmosdr_source_0, 0), (self.ieee802_15_4_oqpsk_phy_0, 0))
         self.connect((self.osmosdr_source_0, 0), (self.qtgui_freq_sink_x_0, 0))
         self.connect((self.osmosdr_source_0, 0), (self.qtgui_waterfall_sink_x_0, 0))
+
 
 
     def closeEvent(self, event):
